@@ -1,7 +1,27 @@
 const mongoose = require('mongoose');
-// const moment = require("moment");
-
 const Schema = mongoose.Schema;
+
+const UserAttende = new Schema({
+  userId: {
+    type: String,
+    required: true,
+  },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+  status: {
+    type: String,
+    required: true,
+    default: 'ACTIVE',
+    enum: ['ACTIVE', 'BLOCKED', 'DELETED'],
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
 
 //this is the Structure of the event
 const eventSchema = new Schema({
@@ -25,8 +45,14 @@ const eventSchema = new Schema({
     required: true,
     default: false,
   },
-  allDay: { type: Boolean, required: true },
-  startDate: { type: String, required: true },
+  allDay: {
+    type: Boolean,
+    required: true,
+  },
+  startDate: {
+    type: String,
+    required: true,
+  },
   endDate: {
     type: String,
     required: function () {
@@ -35,39 +61,24 @@ const eventSchema = new Schema({
   },
   startTime: {
     type: String,
-    // validate: {
-    // 	validator: function (v) {
-    // 		return moment(v, "LT", true).isValid();
-    // 	},
-    // 	message: (props) => "Start time is not valid",
-    // },
     required: function () {
       return !this.allDay;
     },
   },
   endTime: {
     type: String,
-    // validate: {
-    // 	validator: function (v) {
-    // 		return moment(v, "LT", true).isValid();
-    // 	},
-    // 	message: (props) => "End time is not valid",
-    // },
     required: function () {
       return !this.allDay;
     },
   },
   recurrance: {
     type: String,
+    default: 'ONCE',
     enum: ['DAILY', 'WEEKLY', 'MONTHLY', 'YEARLY', 'ONCE'],
     required: function () {
       return this.recurring;
     },
   },
-  // description: {
-  // 	type: String,
-  // 	required: true,
-  // },
   isPublic: {
     type: Boolean,
     required: true,
@@ -81,12 +92,7 @@ const eventSchema = new Schema({
     ref: 'User',
     required: true,
   },
-  registrants: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-    },
-  ],
+  registrants: [UserAttende],
   admins: [
     {
       type: Schema.Types.ObjectId,
@@ -105,6 +111,12 @@ const eventSchema = new Schema({
       ref: 'Task',
     },
   ],
+  status: {
+    type: String,
+    required: true,
+    default: 'ACTIVE',
+    enum: ['ACTIVE', 'BLOCKED', 'DELETED'],
+  },
 });
 
 module.exports = mongoose.model('Event', eventSchema);

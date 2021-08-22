@@ -45,6 +45,12 @@ const userSchema = new Schema({
       ref: 'Event',
     },
   ],
+  userType: {
+    type: String,
+    enum: ['USER', 'ADMIN', 'SUPERADMIN'],
+    default: 'USER',
+    required: true,
+  },
   joinedOrganizations: [
     {
       type: Schema.Types.ObjectId,
@@ -81,12 +87,22 @@ const userSchema = new Schema({
       ref: 'Organization',
     },
   ],
+  status: {
+    type: String,
+    required: true,
+    default: 'ACTIVE',
+    enum: ['ACTIVE', 'BLOCKED', 'DELETED'],
+  },
   organizationUserBelongsTo: {
     type: Schema.Types.ObjectId,
     ref: 'Organization',
   },
+  pluginCreationAllowed: {
+    type: Boolean,
+    required: true,
+    default: true,
+  },
 });
 
 userSchema.plugin(mongoosePaginate);
-
 module.exports = mongoose.model('User', userSchema);

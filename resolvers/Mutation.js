@@ -13,15 +13,10 @@ const createAdmin = require('./admin_mutations/createAdmin');
 const removeAdmin = require('./admin_mutations/removeAdmin');
 const joinPublicOrganization = require('./member_mutations/join_public_organization');
 const leaveOrganization = require('./member_mutations/leave_organization');
-
 const removeMember = require('./member_mutations/removeMember');
-
 const updateUserProfile = require('./user_mutations/updateUserProfile');
-
-//const removeMultipleMembers = require("./member_mutations/removeMultipleMembers");
-
 const registerForEvent = require('./event_mutations/registerForEvent');
-
+const unregisterForEventByUser = require('./event_mutations/unregisterForEvent');
 // const createEventProject = require("./event_project_mutations/createProject")
 // const removeEventProject = require("./event_project_mutations/removeProject")
 // const updateEventProject = require("./event_project_mutations/updateProject")
@@ -29,7 +24,6 @@ const registerForEvent = require('./event_mutations/registerForEvent');
 const createTask = require('./project_task_mutations/createTask');
 const removeTask = require('./project_task_mutations/removeTask');
 const updateTask = require('./project_task_mutations/updateTask');
-
 const adminRemovePost = require('./admin_mutations/admin-remove-post');
 const adminRemoveEvent = require('./admin_mutations/admin-remove-event');
 const adminRemoveGroup = require('./admin_mutations/admin-remove-group-chat');
@@ -53,20 +47,23 @@ const unblockUser = require('./block_user_mutations/unblock_user');
 
 const addUserImage = require('./user_image_mutations/add_user_image');
 const removeUserImage = require('./user_image_mutations/remove_user_image');
-
 const addOrganizationImage = require('./organization_image_mutations/add_organization_image');
 const removeOrganizationImage = require('./organization_image_mutations/remove_organization_image');
 
 const createDirectChat = require('./direct_chat_mutations/createDirectChat');
 const removeDirectChat = require('./direct_chat_mutations/removeDirectChat');
 const sendMessageToDirectChat = require('./direct_chat_mutations/sendMessageToDirectChat');
-
 const createGroupChat = require('./group_chat_mutations/createGroupChat');
 const removeGroupChat = require('./group_chat_mutations/removeGroupChat');
 const sendMessageToGroupChat = require('./group_chat_mutations/sendMessageToGroupChat');
 const addUserToGroupChat = require('./group_chat_mutations/addUserToGroupChat');
 const removeUserFromGroupChat = require('./group_chat_mutations/removeUserFromGroupChat');
 const updateLanguage = require('./language_mutation/updateLanguage');
+const blockPluginCreationBySuperadmin = require('../resolvers/user_mutations/blockForPlugin');
+
+const createPlugin = require('./plugin_mutations/createPlugin');
+const createMessageChat = require('./message_chat_mutation/createMessageChat');
+const addLanguageTranslation = require('./language_maintainer_mutation/addLanguageTranslation');
 
 const Mutation = {
   signUp,
@@ -77,23 +74,25 @@ const Mutation = {
 
   updateUserProfile,
   createOrganization,
+
   createEvent,
+  registerForEvent,
   removeEvent,
   updateEvent,
-  updateOrganization,
-  removeOrganization,
+  unregisterForEventByUser,
+
   createAdmin,
   removeAdmin,
+  updateOrganization,
+  removeOrganization,
   joinPublicOrganization,
   leaveOrganization,
-
   removeMember,
   //removeMultipleMembers,
 
   adminRemovePost,
   adminRemoveGroup,
   adminRemoveEvent,
-  registerForEvent,
   // createEventProject,
   // removeEventProject,
   // updateEventProject,
@@ -131,6 +130,11 @@ const Mutation = {
   sendMessageToGroupChat,
   addUserToGroupChat,
   removeUserFromGroupChat,
+  blockPluginCreationBySuperadmin,
+  createPlugin,
+
+  createMessageChat,
+  addLanguageTranslation,
 };
 
 module.exports = Mutation;
