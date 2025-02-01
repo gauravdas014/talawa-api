@@ -1,5 +1,7 @@
-node_modules
 .github
 .vscode
-
-old-api
+build
+coverage
+node_modules
+src/types
+docs/Schema.md
